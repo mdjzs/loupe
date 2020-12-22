@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.js"></script>
+    <style>
+        #wrap {
+            margin-left: 100px;
+            margin-top: 100px;
+        }
+        #box {
+            width: 350px;
+            height: 350px;
+            border: 1px solid black;
+            float: left;
+            position: relative;
+        }
+        #bigBox {
+            float: left;
+            margin-left: 10px;
+            background-image: url("img/0001.jpg");
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+        #filter {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            opacity: 0.5;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: move;
+
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div id="box">
+        <img src="img/001.jpg">
+        <div id="filter" class="hide"></div>
+    </div>
+    <div id="bigBox">
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#box').mousemove(function (ev) {
+            var dx = ev.pageX-$(this).offset().left - 50;
+            var dy = ev.pageY-$(this).offset().top - 50;
+            if(dx<=0) {
+                dx = 0;
+            }
+            if(dx>=250) {
+                dx = 250;
+            }
+            if(dy<=0) {
+                dy = 0;
+            }
+            if(dy>=250) {
+                dy = 250;
+            }
+            var x = -400*(dx/250) + 'px';
+            var y = -400*(dy/250) + 'px';
+            $('#filter').removeClass();
+            $('#filter').css({left:dx + 'px',top:dy + 'px'});
+            $('#bigBox').css({width:'400px',height:'400px',border:'1px solid black',backgroundPositionX:x,backgroundPositionY:y})
+        });
+        $('#box').mouseout(function () {
+            $('#filter').addClass('hide');
+            $('#bigBox').css({width:'0px',height:'0px'})
+        })
+    })
+</script>
+</body>
+</html>
